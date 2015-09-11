@@ -1,0 +1,7 @@
+C:\Users\Johnny\Desktop\launchpad-led-editor\MidiUnitTests\bin\Debug\MidiUnitTests.exe
+C:\Users\Johnny\Desktop\launchpad-led-editor\MidiUnitTests\bin\Debug\MidiUnitTests.pdb
+C:\Users\Johnny\Desktop\launchpad-led-editor\MidiUnitTests\bin\Debug\Midi.dll
+C:\Users\Johnny\Desktop\launchpad-led-editor\MidiUnitTests\bin\Debug\Midi.pdb
+C:\Users\Johnny\Desktop\launchpad-led-editor\MidiUnitTests\bin\Debug\Midi.xml
+C:\Users\Johnny\Desktop\launchpad-led-editor\MidiUnitTests\obj\Debug\MidiUnitTests.exe
+C:\Users\Johnny\Desktop\launchpad-led-editor\MidiUnitTests\obj\Debug\MidiUnitTests.pdb

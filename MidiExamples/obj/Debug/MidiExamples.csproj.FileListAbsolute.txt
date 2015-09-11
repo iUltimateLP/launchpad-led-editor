@@ -1,0 +1,8 @@
+C:\Users\Johnny\Desktop\launchpad-led-editor\MidiExamples\bin\Debug\MidiExamples.exe
+C:\Users\Johnny\Desktop\launchpad-led-editor\MidiExamples\bin\Debug\MidiExamples.pdb
+C:\Users\Johnny\Desktop\launchpad-led-editor\MidiExamples\bin\Debug\Midi.dll
+C:\Users\Johnny\Desktop\launchpad-led-editor\MidiExamples\bin\Debug\Midi.pdb
+C:\Users\Johnny\Desktop\launchpad-led-editor\MidiExamples\bin\Debug\Midi.xml
+C:\Users\Johnny\Desktop\launchpad-led-editor\MidiExamples\obj\Debug\MidiExamples.csprojResolveAssemblyReference.cache
+C:\Users\Johnny\Desktop\launchpad-led-editor\MidiExamples\obj\Debug\MidiExamples.exe
+C:\Users\Johnny\Desktop\launchpad-led-editor\MidiExamples\obj\Debug\MidiExamples.pdb
