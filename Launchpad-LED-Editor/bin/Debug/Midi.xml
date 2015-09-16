@@ -1167,6 +1167,28 @@
             the standard term (eg, "Major third").  If the interval is more than an octave, it
             gives the number of semitones in the interval.</returns>
         </member>
+        <member name="T:Midi.LongMsg">
+            <summary>
+            Utility functions for encoding and decoding short messages.
+            </summary>
+        </member>
+        <member name="M:Midi.LongMsg.IsSysEx(System.UIntPtr,System.UIntPtr)">
+            <summary>
+            Returns true if the given long message describes a SysEx message.
+            </summary>
+            <param name="dwParam1">The dwParam1 arg passed to MidiInProc.</param>
+            <param name="dwParam2">The dwParam2 arg passed to MidiInProc.</param>
+        </member>
+        <member name="M:Midi.LongMsg.DecodeSysEx(System.UIntPtr,System.UIntPtr,System.Byte[]@,System.UInt32@)">
+            <summary>
+            Decodes a SysEx long message.
+            </summary>
+            <param name="dwParam1">The dwParam1 arg passed to MidiInProc.</param>
+            <param name="dwParam2">The dwParam2 arg passed to MidiInProc.</param>
+            <param name="data">The SysEx data to send.</param>
+            <param name="timestamp">Filled in with the timestamp in microseconds since
+            midiInStart().</param>
+        </member>
         <member name="T:Midi.Note">
             <summary>
             A letter and accidental, which together form an octave-independent note.
@@ -1566,6 +1588,11 @@
             Delegate called when an input device receives a Pitch Bend message.
             </summary>
         </member>
+        <member name="T:Midi.InputDevice.SysExHandler">
+            <summary>
+            Delegate called when an input device receives a SysEx message.
+            </summary>
+        </member>
         <member name="E:Midi.InputDevice.NoteOn">
             <summary>
             Event called when an input device receives a Note On message.
@@ -1591,9 +1618,19 @@
             Event called when an input device receives a Pitch Bend message.
             </summary>
         </member>
+        <member name="E:Midi.InputDevice.SysEx">
+            <summary>
+            Event called when an input device receives a SysEx message.
+            </summary>
+        </member>
         <member name="M:Midi.InputDevice.RemoveAllEventHandlers">
             <summary>
             Removes all event handlers from the input events on this device.
+            </summary>
+        </member>
+        <member name="M:Midi.InputDevice.UpdateInstalledDevices">
+            <summary>
+            Refresh the list of input devices
             </summary>
         </member>
         <member name="P:Midi.InputDevice.InstalledDevices">
@@ -1635,6 +1672,8 @@
             <param name="clock">If non-null, the clock's <see cref="P:Midi.Clock.Time"/> property will
             be used to assign a timestamp to each incoming message.  If null, timestamps will be in
             seconds since StartReceiving() was called.</param>
+            <param name="handleSysEx">Boolean, when TRUE buffers will be created to enable handling
+            of incoming MIDI Long Messages (SysEx). When FALSE, all long messages are ignored.</param>
             <exception cref="T:System.InvalidOperationException">The device is not open or is already
             receiving.
             </exception>
@@ -1710,6 +1749,14 @@
             <summary>
             The input callback for midiOutOpen.
             </summary>
+        </member>
+        <member name="M:Midi.InputDevice.DestroyLongMsgBuffer(System.UIntPtr)">
+            <summary>
+            Releases the resources associated with the specified MidiHeader pointer.
+            </summary>
+            <param name="ptr">
+            The pointer to MIDIHDR buffer.
+            </param>
         </member>
         <member name="F:Midi.InputDevice.isInsideInputHandler">
             <summary>
@@ -2096,6 +2143,31 @@
             Returns a copy of this message, shifted in time by the specified amount.
             </summary>
         </member>
+        <member name="T:Midi.SysExMessage">
+            <summary>
+            SysEx message
+            </summary>
+        </member>
+        <member name="M:Midi.SysExMessage.#ctor(Midi.DeviceBase,System.Byte[],System.Single)">
+            <summary>
+            Protected constructor.
+            </summary>
+        </member>
+        <member name="P:Midi.SysExMessage.Data">
+            <summary>
+            Data.
+            </summary>
+        </member>
+        <member name="M:Midi.SysExMessage.SendNow">
+            <summary>
+            Sends this message immediately.
+            </summary>
+        </member>
+        <member name="M:Midi.SysExMessage.MakeTimeShiftedCopy(System.Single)">
+            <summary>
+            Returns a copy of this message, shifted in time by the specified amount.
+            </summary>
+        </member>
         <member name="T:Midi.OutputDevice">
             <summary>
             A MIDI output device.
@@ -2120,6 +2192,11 @@
             <threadsafety static="true" instance="true" />
             <seealso cref="T:Midi.Clock"/>
             <seealso cref="T:Midi.InputDevice"/>
+        </member>
+        <member name="M:Midi.OutputDevice.UpdateInstalledDevices">
+            <summary>
+            Refresh the list of input devices
+            </summary>
         </member>
         <member name="P:Midi.OutputDevice.InstalledDevices">
             <summary>
@@ -2229,6 +2306,13 @@
             instruments described in the <see cref="T:Midi.Instrument"/> enum; other instruments
             may have different instrument sets.
             </remarks>
+        </member>
+        <member name="M:Midi.OutputDevice.SendSysEx(System.Byte[])">
+            <summary>
+            Sends a System Exclusive (sysex) message to this MIDI output device.
+            </summary>
+            <param name="data">The message to send (as byte array)</param>
+            <exception cref="T:Midi.DeviceException">The message cannot be sent.</exception>
         </member>
         <member name="M:Midi.OutputDevice.CheckReturnCode(Midi.Win32API.MMRESULT)">
             <summary>
@@ -2948,6 +3032,12 @@
             </summary>
             Win32 docs: http://msdn.microsoft.com/en-us/library/ms711596(VS.85).aspx
         </member>
+        <member name="T:Midi.Win32API.MIDIHDR">
+            <summary>
+            Strut to hold outgoing long messages (sysex)
+            </summary>
+            Win32 docs: http://msdn.microsoft.com/en-us/library/ms711592(v=VS.85).aspx
+        </member>
         <member name="M:Midi.Win32API.midiOutGetNumDevs">
             <summary>
             Returns the number of MIDI output devices on this system.
@@ -2993,6 +3083,24 @@
             Sends a short MIDI message (anything but sysex or stream).
             </summary>
             Win32 docs: http://msdn.microsoft.com/en-us/library/ms711640(VS.85).aspx
+        </member>
+        <member name="M:Midi.Win32API.midiOutLongMsg(Midi.Win32API.HMIDIOUT,System.IntPtr,System.UInt32)">
+            <summary>
+            Sends a long MIDI message (sysex).
+            </summary>
+            Win32 docs: http://msdn.microsoft.com/en-us/library/ms711629(VS.85).aspx
+        </member>
+        <member name="M:Midi.Win32API.midiOutPrepareHeader(Midi.Win32API.HMIDIOUT,System.IntPtr,System.UInt32)">
+            <summary>
+            Prepares a long message for sending
+            </summary>
+            Win32 docs: http://msdn.microsoft.com/en-us/library/ms711634(v=VS.85).aspx
+        </member>
+        <member name="M:Midi.Win32API.midiOutUnprepareHeader(Midi.Win32API.HMIDIOUT,System.IntPtr,System.UInt32)">
+            <summary>
+            Frees header space after sending long message
+            </summary>
+            Win32 docs: http://msdn.microsoft.com/en-us/library/ms711641(v=VS.85).aspx
         </member>
         <member name="M:Midi.Win32API.midiOutGetErrorText(Midi.Win32API.MMRESULT,System.Text.StringBuilder)">
              <summary>
@@ -3061,6 +3169,24 @@
              NOTE: This is adapted from the original Win32 function in order to make it typesafe.
             
              Win32 docs: http://msdn.microsoft.com/en-us/library/ms711605(VS.85).aspx
+        </member>
+        <member name="M:Midi.Win32API.midiInAddBuffer(Midi.Win32API.HMIDIIN,System.IntPtr,System.UInt32)">
+            <summary>
+            Send a buffer to and input device in order to receive SysEx messages.
+            </summary>
+            Win32 docs: http://msdn.microsoft.com/en-us/library/dd798450(VS.85).aspx
+        </member>
+        <member name="M:Midi.Win32API.midiInPrepareHeader(Midi.Win32API.HMIDIIN,System.IntPtr,System.UInt32)">
+            <summary>
+            Prepare an input buffer before passing to midiInAddBuffer.
+            </summary>
+            Win32 docs: http://msdn.microsoft.com/en-us/library/dd798459(VS.85).aspx
+        </member>
+        <member name="M:Midi.Win32API.midiInUnprepareHeader(Midi.Win32API.HMIDIIN,System.IntPtr,System.UInt32)">
+            <summary>
+            Clean up preparation performed by midiInPrepareHeader.
+            </summary>
+            Win32 docs: http://msdn.microsoft.com/en-us/library/dd798464(VS.85).aspx
         </member>
         <member name="T:Midi.ScalePattern">
             <summary>
@@ -3139,7 +3265,11 @@
             <see cref="F:Midi.Scale.Major"/> and <see cref="F:Midi.Scale.HarmonicMinor"/>.</para>
             </remarks>
         </member>
-        <!-- Ungültiger XML-Kommentar wurde für den Member "P:Midi.Scale.Name" ignoriert -->
+        <member name="P:Midi.Scale.Name">
+            <summary>
+            The scale's human-readable name, such as "G# Major" or "Eb Melodic Minor (ascending)".
+            </summary>
+        </member>
         <member name="P:Midi.Scale.Tonic">
             <summary>The tonic of this scale.</summary>
         </member>

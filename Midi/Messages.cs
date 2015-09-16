@@ -524,4 +524,45 @@ namespace Midi
             return new CallbackMessage(callback, Time + delta);
         }
     }
+
+#region SysEx
+
+    /// <summary>
+    /// SysEx message
+    /// </summary>
+    public class SysExMessage : DeviceMessage
+    {
+        /// <summary>
+        /// Protected constructor.
+        /// </summary>
+        public SysExMessage(DeviceBase device, Byte[] data, float time)
+            : base(device, time)
+        {
+            this.data = data;
+        }
+
+        /// <summary>
+        /// Data.
+        /// </summary>
+        public Byte[] Data { get { return data; } }
+        private Byte[] data;
+
+        /// <summary>
+        /// Sends this message immediately.
+        /// </summary>
+        public override void SendNow()
+        {
+            ((OutputDevice)Device).SendSysEx(data);
+        }
+
+        /// <summary>
+        /// Returns a copy of this message, shifted in time by the specified amount.
+        /// </summary>
+        public override Message MakeTimeShiftedCopy(float delta)
+        {
+            return new SysExMessage(Device, data, Time + delta);
+        }
+    }
+
+#endregion
 }

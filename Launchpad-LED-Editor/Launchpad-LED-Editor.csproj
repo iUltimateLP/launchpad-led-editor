@@ -34,6 +34,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,13 +47,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DeviceManager.cs" />
+    <Compile Include="ExtendedGraphics.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="GUI\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GUI\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="LaunchpadData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GUI\TestingForm.cs">
@@ -72,6 +75,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="GUI\TestingForm.resx">
       <DependentUpon>TestingForm.cs</DependentUpon>
@@ -90,14 +94,16 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MidiExamples\MidiExamples.csproj">
-      <Project>{1a5f8ed9-d70d-4ff3-8153-72d9859fa89e}</Project>
-      <Name>MidiExamples</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Midi\Midi.csproj">
       <Project>{f60d8b7b-2d2e-4b94-a736-3783ffe1a25c}</Project>
       <Name>Midi</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="centerpiece.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="centerpiece2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -191,7 +191,7 @@ namespace Midi
 
         /// <summary>
         /// The scale's human-readable name, such as "G# Major" or "Eb Melodic Minor (ascending)".
-        /// </returns>
+        /// </summary>
         public string Name
         {
             get

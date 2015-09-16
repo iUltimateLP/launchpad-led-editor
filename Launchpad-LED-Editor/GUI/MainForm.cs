@@ -10,27 +10,28 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Input;
 using Midi;
+using System.Drawing.Drawing2D;
 
 namespace Launchpad_LED_Editor
 {
+
     public partial class MainForm : Form
     {
         public bool isTesting = false;
         public bool testing_recieve_passed = false;
         public bool testing_sending_passed = false;
-        public Models currentModel = Models.Launchpad;
 
         private TestingForm testingform = new TestingForm();
-
-        public Launchpad _launchpadMk1 = new Launchpad(Models.Launchpad, "Launchpad");
-        public Launchpad _launchpadMk2 = new Launchpad(Models.LaunchpadMk2, "Launchpad MK2");
-        public Launchpad _launchpadPro = new Launchpad(Models.LaunchpadPro, "Launchpad Pro");
-        public Launchpad _launchpadMini = new Launchpad(Models.LaunchpadMini, "Launchpad Mini");
-        public Launchpad _launchpadS = new Launchpad(Models.LaunchpadS, "Launchpad S");
 
         public Panel[,] ledPanels = new Panel[8, 8];
 
         public Color currentPaintingColor;
+
+        public byte[] sysex_header = { 240, 00, 32, 41, 2, 24}; //The SysEx header used for every launchpad message
+        public byte[] sysex_end = { 247 }; //The SysEx end byte
+
+        public bool isScrolling = false;
+        public bool isScrollLooping = false;
 
         public MainForm()
         {
@@ -52,6 +53,18 @@ namespace Launchpad_LED_Editor
             populateLEDs(8, 8);
 
             updateColor(Color.Gray);
+
+            mainToolTip.SetToolTip(midi_inputDevices, "Shows available input devices.");
+            mainToolTip.SetToolTip(midi_outputDevices, "Shows available output devices.");
+            mainToolTip.SetToolTip(midi_InputState, "Shows actual state of MIDI input device");
+            mainToolTip.SetToolTip(midi_OutputState, "Shows actual state of MIDI output device.");
+            mainToolTip.SetToolTip(midi_testDevices, "Tests, if your Launchpad works correctly.");
+            mainToolTip.SetToolTip(launchpadModels, "Select your Launchpad model in here, so colors can be automaticially set up for you.");
+            mainToolTip.SetToolTip(scroll_Text, "The text you want to scroll");
+            mainToolTip.SetToolTip(scroll_Speed, "The speed of scrolling. 1 = Slow, 7 = Fast, the default is 4.");
+            mainToolTip.SetToolTip(scroll_Loop, "If you want to loop it.");
+            mainToolTip.SetToolTip(scroll_Start, "Start scrolling");
+            mainToolTip.SetToolTip(scroll_Stop, "Stop scrolling");
         }
 
         public void updateStatusLabel()
@@ -97,19 +110,20 @@ namespace Launchpad_LED_Editor
             }
             else if (DeviceManager.targetInput == selected)
             {
-                Console.WriteLine("Input selected but it is already targetted");
+                //Just in case that we have already selected it.
             }
             else
             {
                 if (DeviceManager.targetInput != null && DeviceManager.targetInput.IsOpen) //Input is valid and open?
                 {
-                    Console.WriteLine("Closing already open device and opting in another one!");
                     DeviceManager.targetInput.Close(); //Closing old
+                    DeviceManager.targetInput.SysEx += null;
                     DeviceManager.targetInput = null; //Resetting it
                     updateStatusLabel();
                 }
                 DeviceManager.targetInput = selected; //Setting new input
                 DeviceManager.targetInput.Open(); //Opening it
+                DeviceManager.targetInput.SysEx += new InputDevice.SysExHandler(SysExAnswer);
                 updateStatusLabel();
             }
         }
@@ -124,13 +138,12 @@ namespace Launchpad_LED_Editor
             }
             else if (DeviceManager.targetOutput == selected)
             {
-                Console.WriteLine("Input selected but it is already targetted");
+                //Just in case that we have already selected it.
             }
             else
             {
                 if (DeviceManager.targetOutput != null && DeviceManager.targetOutput.IsOpen) //Output is valid and open?
                 {
-                    Console.WriteLine("Closing already open device and opting in another one!");
                     DeviceManager.targetOutput.Close(); //Closing old
                     DeviceManager.targetOutput = null; //Resetting it
                     updateStatusLabel();
@@ -167,7 +180,6 @@ namespace Launchpad_LED_Editor
         public void EndTesting()
         {
             DeviceManager.targetInput.NoteOn += null;
-            //DeviceManager.targetInput.StopReceiving();
             isTesting = false;
             if (testingform.InvokeRequired)
             {
@@ -179,7 +191,6 @@ namespace Launchpad_LED_Editor
 
         public void TestingNoteOn(NoteOnMessage msg)
         {
-            Console.WriteLine("MIDI NOTE ON RECEIVED! NOTE: " + msg.Pitch + " VELOCITY: " + msg.Velocity + " TIME: " + msg.Time);
             if (isTesting && testing_recieve_passed == false)
             {
                 testing_recieve_passed = true;
@@ -233,9 +244,14 @@ namespace Launchpad_LED_Editor
 
         public void populateLEDs(int sizex, int sizey)
         {
-            for (int i = 0; i < sizex; i++)
+            int seperator_x_width = 8; 
+            int seperator_y_width = 3; // Should be x_width-5 to be symmetrical (5 cause of the margin)
+
+            //Population of LEDs proceeds in 4 blocks: I, II, III, IV
+            //Block I
+            for (int i = 0; i < sizex/2; i++)
             {
-                for (int f = 0; f < sizey; f++)
+                for (int f = 0; f < sizey/2; f++)
                 {
                     Panel panel = new Panel();
                     panel.Name = "led_" + i + "_" + f;
@@ -245,7 +261,51 @@ namespace Launchpad_LED_Editor
                     panel.Click += new EventHandler(led_click);
                     ledPanels[i, f] = panel;
                     ledGroup.Controls.Add(panel);
-                    
+                }
+            }
+            //Block II
+            for (int i = sizex / 2; i < sizex; i++)
+            {
+                for (int f = 0; f < sizey/2; f++)
+                {
+                    Panel panel = new Panel();
+                    panel.Name = "led_" + i + "_" + f;
+                    panel.BackColor = Color.Gray;
+                    panel.Location = new Point(seperator_x_width + (i * 52), 12 + (f * 52));
+                    panel.Size = new Size(50, 50);
+                    panel.Click += new EventHandler(led_click);
+                    ledPanels[i, f] = panel;
+                    ledGroup.Controls.Add(panel);
+                }
+            }
+            //Block III
+            for (int i = sizex/2; i < sizex; i++)
+            {
+                for (int f = sizey/2; f < sizey; f++)
+                {
+                    Panel panel = new Panel();
+                    panel.Name = "led_" + i + "_" + f;
+                    panel.BackColor = Color.Gray;
+                    panel.Location = new Point(seperator_x_width + (i * 52), 12 + seperator_y_width + (f * 52));
+                    panel.Size = new Size(50, 50);
+                    panel.Click += new EventHandler(led_click);
+                    ledPanels[i, f] = panel;
+                    ledGroup.Controls.Add(panel);
+                }
+            }
+            //Block IV
+            for (int i = 0; i < sizex/2; i++)
+            {
+                for (int f = sizey/2; f < sizey; f++)
+                {
+                    Panel panel = new Panel();
+                    panel.Name = "led_" + i + "_" + f;
+                    panel.BackColor = Color.Gray;
+                    panel.Location = new Point(5 + (i * 52), 12 + seperator_y_width + (f * 52));
+                    panel.Size = new Size(50, 50);
+                    panel.Click += new EventHandler(led_click);
+                    ledPanels[i, f] = panel;
+                    ledGroup.Controls.Add(panel);
                 }
             }
         }
@@ -265,10 +325,13 @@ namespace Launchpad_LED_Editor
                 Console.WriteLine("Painting color is " + currentPaintingColor.ToString());
                 some.BackColor = currentPaintingColor;
             }
+
+            transparentPanel1.Hide();
+            transparentPanel1.Show();          
         }
 
         //Colors
-
+        #region ColorPanels
         private void panel_red_Click(object sender, EventArgs e)
         {
             updateColor(Color.Red);
@@ -313,11 +376,104 @@ namespace Launchpad_LED_Editor
         {
             updateColor(Color.Gray);
         }
-
+        #endregion
         public void updateColor(Color color)
         {
             panel_currentColor.BackColor = color;
             currentPaintingColor = color;
+        }
+
+        public void SysExAnswer(SysExMessage m)
+        {
+            byte[] message = m.Data;
+            byte[] stopbytes = { 240, 0, 32, 41, 2, 24, 21, 247 };
+            if (isScrolling)
+            {
+                if (Enumerable.SequenceEqual(message, stopbytes))
+                {
+                    if (isScrollLooping == false)
+                    {
+                        isScrollLooping = false;
+                        isScrolling = false;
+                    }
+                }
+                else
+                    Console.WriteLine("SysEx received something, but not a Scrolling Stop Byte!");
+            }
+        }
+
+        private void scroll_Start_Click(object sender, EventArgs e)
+        {
+            if (DeviceManager.targetOutput != null && isScrolling == false && String.IsNullOrEmpty(scroll_Text.Text) == false && currentPaintingColor != Color.Gray)
+            {
+                //Format: SysEx header + Color + Loop + Text + SysEx end
+                byte[] text = DeviceManager.stringToAscii(scroll_Text.Text);
+                byte opid = 20;
+                byte color = (byte)DeviceManager.colorToVelo(currentPaintingColor);
+                byte loop = Convert.ToByte(scroll_Loop.Checked);
+                byte speed = (byte)scroll_Speed.Value;
+                byte[] args = { opid, color, loop, speed };
+
+                byte[] final = sysex_header.Concat(args.Concat(text.Concat(sysex_end))).ToArray();
+
+                foreach (byte item in final)
+                {
+                    Console.Write(item.ToString() + "-");
+                }
+                Console.WriteLine("");
+                DeviceManager.targetOutput.SendSysEx(final);
+                isScrolling = true;
+                isScrollLooping = scroll_Loop.Checked;
+                if (DeviceManager.targetInput.IsReceiving == false)
+                    DeviceManager.targetInput.StartReceiving(null, true);
+            }
+        }
+
+        private void scroll_Stop_Click(object sender, EventArgs e)
+        {
+            if (isScrolling)
+            {
+                byte[] stop = { 240, 0, 32, 41, 2, 24, 20, 247 };
+                DeviceManager.targetOutput.SendSysEx(stop);
+                isScrolling = false;
+                isScrollLooping = false;
+                DeviceManager.targetInput.StopReceiving();
+            }
+        }
+
+        private void scroll_Text_TextChanged(object sender, EventArgs e)
+        {
+            string str = scroll_Text.Text;
+            List<char> unsupportedChars = new List<char>();
+
+            foreach (char c in str)
+            {
+                if ((int)c > 127)
+                {
+                    if (unsupportedChars.Contains(c) == false)
+                    {
+                        unsupportedChars.Add(c);
+                        unsupportedChars.Add(",".ToCharArray()[0]); //Adding a comma here, to make view better!
+                    }
+                }
+            }
+
+            if (unsupportedChars.Count != 0)
+            {
+                string all = new string(unsupportedChars.ToArray());
+                errorBubble.Show("The following letters are unsupported: " + all, scroll_Text, scroll_Text.Width, 0, 2000);
+                System.Media.SystemSounds.Asterisk.Play();
+            }
+        }
+
+        private void transparentPanel1_Paint(object sender, PaintEventArgs e)
+        {
+            Graphics g = e.Graphics;
+            g.SmoothingMode = SmoothingMode.HighQuality;
+
+            Rectangle r1 = new Rectangle(10, 15, 25, 25);
+
+            Gfx.RotateRect(g, r1, 45, Color.Black);
         }
     }
 }

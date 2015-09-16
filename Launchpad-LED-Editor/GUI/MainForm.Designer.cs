@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.launchpadModels = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -55,10 +56,25 @@
             this.panel_green = new System.Windows.Forms.Panel();
             this.panel_white = new System.Windows.Forms.Panel();
             this.panel_clear = new System.Windows.Forms.Panel();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.scroll_Stop = new System.Windows.Forms.Button();
+            this.scroll_Start = new System.Windows.Forms.Button();
+            this.scroll_Loop = new System.Windows.Forms.CheckBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.scroll_Speed = new System.Windows.Forms.TrackBar();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.scroll_Text = new System.Windows.Forms.TextBox();
+            this.mainToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.errorBubble = new System.Windows.Forms.ToolTip(this.components);
+            this.transparentPanel1 = new Launchpad_LED_Editor.TransparentPanel();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.ledGroup.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.scroll_Speed)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -222,11 +238,12 @@
             // 
             // ledGroup
             // 
+            this.ledGroup.Controls.Add(this.transparentPanel1);
             this.ledGroup.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
             this.ledGroup.ForeColor = System.Drawing.Color.Gold;
             this.ledGroup.Location = new System.Drawing.Point(278, -2);
             this.ledGroup.Name = "ledGroup";
-            this.ledGroup.Size = new System.Drawing.Size(425, 432);
+            this.ledGroup.Size = new System.Drawing.Size(428, 436);
             this.ledGroup.TabIndex = 1;
             this.ledGroup.TabStop = false;
             // 
@@ -383,14 +400,142 @@
             this.panel_clear.TabIndex = 8;
             this.panel_clear.Click += new System.EventHandler(this.panel_clear_Click);
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.scroll_Stop);
+            this.groupBox3.Controls.Add(this.scroll_Start);
+            this.groupBox3.Controls.Add(this.scroll_Loop);
+            this.groupBox3.Controls.Add(this.label9);
+            this.groupBox3.Controls.Add(this.scroll_Speed);
+            this.groupBox3.Controls.Add(this.label8);
+            this.groupBox3.Controls.Add(this.label7);
+            this.groupBox3.Controls.Add(this.scroll_Text);
+            this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
+            this.groupBox3.ForeColor = System.Drawing.Color.Gold;
+            this.groupBox3.Location = new System.Drawing.Point(4, 298);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(268, 136);
+            this.groupBox3.TabIndex = 14;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Text Scroll";
+            // 
+            // scroll_Stop
+            // 
+            this.scroll_Stop.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.scroll_Stop.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.scroll_Stop.Location = new System.Drawing.Point(113, 99);
+            this.scroll_Stop.Name = "scroll_Stop";
+            this.scroll_Stop.Size = new System.Drawing.Size(82, 26);
+            this.scroll_Stop.TabIndex = 17;
+            this.scroll_Stop.Text = "Terminate";
+            this.scroll_Stop.UseVisualStyleBackColor = true;
+            this.scroll_Stop.Click += new System.EventHandler(this.scroll_Stop_Click);
+            // 
+            // scroll_Start
+            // 
+            this.scroll_Start.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.scroll_Start.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.scroll_Start.Location = new System.Drawing.Point(9, 99);
+            this.scroll_Start.Name = "scroll_Start";
+            this.scroll_Start.Size = new System.Drawing.Size(99, 26);
+            this.scroll_Start.TabIndex = 12;
+            this.scroll_Start.Text = "Start Scrolling";
+            this.scroll_Start.UseVisualStyleBackColor = true;
+            this.scroll_Start.Click += new System.EventHandler(this.scroll_Start_Click);
+            // 
+            // scroll_Loop
+            // 
+            this.scroll_Loop.AutoSize = true;
+            this.scroll_Loop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.scroll_Loop.ForeColor = System.Drawing.Color.White;
+            this.scroll_Loop.Location = new System.Drawing.Point(48, 80);
+            this.scroll_Loop.Name = "scroll_Loop";
+            this.scroll_Loop.Size = new System.Drawing.Size(15, 14);
+            this.scroll_Loop.TabIndex = 16;
+            this.scroll_Loop.UseVisualStyleBackColor = false;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(7, 78);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(42, 16);
+            this.label9.TabIndex = 15;
+            this.label9.Text = "Loop:";
+            // 
+            // scroll_Speed
+            // 
+            this.scroll_Speed.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.scroll_Speed.LargeChange = 7;
+            this.scroll_Speed.Location = new System.Drawing.Point(91, 43);
+            this.scroll_Speed.Maximum = 7;
+            this.scroll_Speed.Minimum = 1;
+            this.scroll_Speed.Name = "scroll_Speed";
+            this.scroll_Speed.Size = new System.Drawing.Size(94, 45);
+            this.scroll_Speed.TabIndex = 14;
+            this.scroll_Speed.Value = 4;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(6, 51);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(89, 16);
+            this.label8.TabIndex = 13;
+            this.label8.Text = "Scroll Speed:";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(6, 24);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(37, 16);
+            this.label7.TabIndex = 12;
+            this.label7.Text = "Text:";
+            // 
+            // scroll_Text
+            // 
+            this.scroll_Text.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.scroll_Text.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.scroll_Text.ForeColor = System.Drawing.Color.Orange;
+            this.scroll_Text.Location = new System.Drawing.Point(46, 21);
+            this.scroll_Text.Name = "scroll_Text";
+            this.scroll_Text.Size = new System.Drawing.Size(212, 22);
+            this.scroll_Text.TabIndex = 0;
+            this.scroll_Text.TextChanged += new System.EventHandler(this.scroll_Text_TextChanged);
+            // 
+            // mainToolTip
+            // 
+            this.mainToolTip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.mainToolTip.ForeColor = System.Drawing.Color.Gold;
+            // 
+            // errorBubble
+            // 
+            this.errorBubble.IsBalloon = true;
+            this.errorBubble.ShowAlways = true;
+            this.errorBubble.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Warning;
+            this.errorBubble.ToolTipTitle = "Something strange.";
+            // 
+            // transparentPanel1
+            // 
+            this.transparentPanel1.Location = new System.Drawing.Point(191, 192);
+            this.transparentPanel1.Name = "transparentPanel1";
+            this.transparentPanel1.Size = new System.Drawing.Size(50, 50);
+            this.transparentPanel1.TabIndex = 0;
+            this.transparentPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.transparentPanel1_Paint);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.ClientSize = new System.Drawing.Size(709, 434);
-            this.Controls.Add(this.groupBox2);
+            this.ClientSize = new System.Drawing.Size(712, 439);
             this.Controls.Add(this.ledGroup);
+            this.Controls.Add(this.groupBox3);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -401,9 +546,13 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.ledGroup.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.scroll_Speed)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -437,6 +586,18 @@
         private System.Windows.Forms.Panel panel_currentColor;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Panel panel_clear;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.TextBox scroll_Text;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TrackBar scroll_Speed;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.CheckBox scroll_Loop;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.ToolTip mainToolTip;
+        private System.Windows.Forms.Button scroll_Start;
+        private System.Windows.Forms.Button scroll_Stop;
+        private System.Windows.Forms.ToolTip errorBubble;
+        private TransparentPanel transparentPanel1;
     }
 }
 

@@ -62,6 +62,7 @@
     <Compile Include="DeviceBase.cs" />
     <Compile Include="Instrument.cs" />
     <Compile Include="Interval.cs" />
+    <Compile Include="LongMsg.cs" />
     <Compile Include="Note.cs" />
     <Compile Include="Percussion.cs" />
     <Compile Include="InputDevice.cs" />
@@ -73,9 +74,6 @@
     <Compile Include="Win32API.cs" />
     <Compile Include="Scale.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="README.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

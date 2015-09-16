@@ -98,5 +98,21 @@ namespace Launchpad_LED_Editor
             else
                 return 0;
         }
+
+        public static byte[] stringToAscii(string str)
+        {
+            //http://stackoverflow.com/questions/5348844/how-to-convert-a-string-to-ascii
+            List<byte> curList = new List<byte>();
+            foreach(char c in str)
+            {
+                int unicode = c;
+                if (unicode < 128)
+                {
+                    curList.Add(System.Convert.ToByte(unicode));
+                }
+            }
+            byte[] cur = curList.ToArray();
+            return cur;
+        }
     }
 }

@@ -1,6 +1,6 @@
-C:\Users\Johnny\Desktop\launchpad-led-editor\Midi\bin\Debug\Midi.XML
-C:\Users\Johnny\Desktop\launchpad-led-editor\Midi\bin\Debug\Midi.dll
-C:\Users\Johnny\Desktop\launchpad-led-editor\Midi\bin\Debug\Midi.pdb
-C:\Users\Johnny\Desktop\launchpad-led-editor\Midi\obj\Debug\Midi.csprojResolveAssemblyReference.cache
-C:\Users\Johnny\Desktop\launchpad-led-editor\Midi\obj\Debug\Midi.dll
-C:\Users\Johnny\Desktop\launchpad-led-editor\Midi\obj\Debug\Midi.pdb
+C:\Users\Johnny\Desktop\launchpad-led-editor-sysex\Midi\bin\Debug\Midi.XML
+C:\Users\Johnny\Desktop\launchpad-led-editor-sysex\Midi\bin\Debug\Midi.dll
+C:\Users\Johnny\Desktop\launchpad-led-editor-sysex\Midi\bin\Debug\Midi.pdb
+C:\Users\Johnny\Desktop\launchpad-led-editor-sysex\Midi\obj\Debug\Midi.csprojResolveAssemblyReference.cache
+C:\Users\Johnny\Desktop\launchpad-led-editor-sysex\Midi\obj\Debug\Midi.dll
+C:\Users\Johnny\Desktop\launchpad-led-editor-sysex\Midi\obj\Debug\Midi.pdb

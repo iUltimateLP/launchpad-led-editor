@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2009, Tom Lokovic
+// Copyright (c) 2009, Tom Lokovic
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without
@@ -54,6 +54,17 @@ namespace Midi
     public class OutputDevice : DeviceBase
     {
         #region Public Methods and Properties
+
+        /// <summary>
+        /// Refresh the list of input devices
+        /// </summary>
+        public static void UpdateInstalledDevices()
+        {
+            lock (staticLock)
+            {
+                installedDevices = null;
+            }
+        }
 
         /// <summary>
         /// List of devices installed on this system.
@@ -257,6 +268,88 @@ namespace Midi
                     channel, instrument)));
             }
         }
+
+#region SysEx
+
+        /// <summary>
+        /// Sends a System Exclusive (sysex) message to this MIDI output device.
+        /// </summary>
+        /// <param name="data">The message to send (as byte array)</param>
+        /// <exception cref="DeviceException">The message cannot be sent.</exception>
+        public void SendSysEx(Byte[] data)
+        {
+            lock (this)
+            {
+                //Win32API.MMRESULT result;
+                IntPtr ptr;
+                UInt32 size = (UInt32)System.Runtime.InteropServices.Marshal.SizeOf(typeof(Win32API.MIDIHDR));
+                Win32API.MIDIHDR header = new Win32API.MIDIHDR();
+                header.lpData = System.Runtime.InteropServices.Marshal.AllocHGlobal(data.Length);
+                for (int i = 0; i < data.Length; i++)
+                    System.Runtime.InteropServices.Marshal.WriteByte(header.lpData, i, data[i]);
+                header.dwBufferLength = data.Length;
+                header.dwBytesRecorded = data.Length;
+                header.dwFlags = 0;
+
+                try
+                {
+                    ptr = System.Runtime.InteropServices.Marshal.AllocHGlobal(System.Runtime.InteropServices.Marshal.SizeOf(typeof(Win32API.MIDIHDR)));
+                }
+                catch (Exception)
+                {
+                    System.Runtime.InteropServices.Marshal.FreeHGlobal(header.lpData);
+                    throw;
+                }
+
+                try
+                {
+                    System.Runtime.InteropServices.Marshal.StructureToPtr(header, ptr, false);
+                }
+                catch (Exception)
+                {
+                    System.Runtime.InteropServices.Marshal.FreeHGlobal(header.lpData);
+                    System.Runtime.InteropServices.Marshal.FreeHGlobal(ptr);
+                    throw;
+                }
+
+                //result = Win32API.midiOutPrepareHeader(handle, ptr, size);
+                //if (result == 0) result = Win32API.midiOutLongMsg(handle, ptr, size);
+                //if (result == 0) result = Win32API.midiOutUnprepareHeader(handle, ptr, size);
+                CheckReturnCode(Win32API.midiOutPrepareHeader(handle, ptr, size));
+                CheckReturnCode(Win32API.midiOutLongMsg(handle, ptr, size));
+                CheckReturnCode(Win32API.midiOutUnprepareHeader(handle, ptr, size));
+
+                System.Runtime.InteropServices.Marshal.FreeHGlobal(header.lpData);
+                System.Runtime.InteropServices.Marshal.FreeHGlobal(ptr);
+            }
+        }
+
+        ///// <summary>
+        ///// Returns the handle to the current OutputDevice as a Strut
+        ///// </summary>
+        ////public static Int32 DeviceHandle(OutputDevice od)
+        //public static Win32API.HMIDIOUT DeviceHandle(OutputDevice od)
+        //{
+        //    lock (staticLock)
+        //    {
+        //        //return od.handle.handle;
+        //        return od.handle;
+        //    }
+        //}
+        ///// <summary>
+        ///// Returns the handle to the current OutputDevice as an Integer
+        ///// </summary>
+        //public static Int32 DeviceHandleHandle(OutputDevice od)
+        ////public static Win32API.HMIDIOUT DeviceHandle(OutputDevice od)
+        //{
+        //    lock (staticLock)
+        //    {
+        //        //return od.handle.handle;
+        //        return od.handle.handle;
+        //    }
+        //}
+
+#endregion
 
         #endregion
 
