@@ -22,6 +22,7 @@ namespace Launchpad_LED_Editor
         public bool testing_sending_passed = false;
 
         private TestingForm testingform = new TestingForm();
+        private CustomColors colorsform = new CustomColors();
 
         public Panel[,] ledPanels = new Panel[8, 8];
 
@@ -32,6 +33,8 @@ namespace Launchpad_LED_Editor
 
         public bool isScrolling = false;
         public bool isScrollLooping = false;
+
+        public List<DeviceManager.LaunchpadColor> availableColors = new List<DeviceManager.LaunchpadColor>();
 
         public MainForm()
         {
@@ -125,6 +128,7 @@ namespace Launchpad_LED_Editor
                 DeviceManager.targetInput.Open(); //Opening it
                 DeviceManager.targetInput.SysEx += new InputDevice.SysExHandler(SysExAnswer);
                 updateStatusLabel();
+                AutoDetectLaunchpad(true);
             }
         }
 
@@ -152,6 +156,7 @@ namespace Launchpad_LED_Editor
                 DeviceManager.targetOutput.Open(); //Opening it
                 ResetAllNotes();
                 updateStatusLabel();
+                AutoDetectLaunchpad(false);
             }
         }
 
@@ -166,6 +171,56 @@ namespace Launchpad_LED_Editor
                 midi_testDevices.Enabled = false; //Disable button
 
                 StartTesting();
+            }
+        }
+
+        public void AutoDetectLaunchpad(bool isInput)
+        {
+            if (isInput)
+            {
+                if (DeviceManager.targetInput.Name == "Launchpad S")
+                {
+                    launchpadModels.SelectedItem = launchpadModels.Items[3];
+                }
+                else if (DeviceManager.targetInput.Name == "Launchpad MK2")
+                {
+                    launchpadModels.SelectedItem = launchpadModels.Items[0];
+                }
+                else if (DeviceManager.targetInput.Name == "Launchpad Mini")
+                {
+                    launchpadModels.SelectedItem = launchpadModels.Items[1];
+                }
+                else if (DeviceManager.targetInput.Name == "Launchpad Pro")
+                {
+                    launchpadModels.SelectedItem = launchpadModels.Items[2];
+                }
+                else
+                {
+                    MessageBox.Show("Your MIDI device does not seem to be a Launchpad. However, you can continue anyway.\nIf this is a fault, please write in the forum thread that you are experiencing this, and give him this MIDI Device Name: " + DeviceManager.targetInput.Name, "No Launchpad?", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            else
+            {
+                if (DeviceManager.targetOutput.Name == "Launchpad S")
+                {
+                    launchpadModels.SelectedItem = launchpadModels.Items[3];
+                }
+                else if (DeviceManager.targetOutput.Name == "Launchpad MK2")
+                {
+                    launchpadModels.SelectedItem = launchpadModels.Items[0];
+                }
+                else if (DeviceManager.targetOutput.Name == "Launchpad Mini")
+                {
+                    launchpadModels.SelectedItem = launchpadModels.Items[1];
+                }
+                else if (DeviceManager.targetOutput.Name == "Launchpad Pro")
+                {
+                    launchpadModels.SelectedItem = launchpadModels.Items[2];
+                }
+                else
+                {
+                    MessageBox.Show("Your MIDI device does not seem to be a Launchpad. However, you can continue anyway.\nIf this is a fault, please write in the forum thread that you are experiencing this, and give him this MIDI Device Name: " + DeviceManager.targetInput.Name, "No Launchpad?", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
         }
 
@@ -240,6 +295,53 @@ namespace Launchpad_LED_Editor
         {
             string name = launchpadModels.SelectedItem.ToString();
 
+            switch (name)
+            {
+                case "Launchpad S":
+                    availableColors.Clear();
+                    availableColors.Add(DeviceManager.LaunchpadColor.Green);
+                    availableColors.Add(DeviceManager.LaunchpadColor.Lime);
+                    availableColors.Add(DeviceManager.LaunchpadColor.Orange);
+                    availableColors.Add(DeviceManager.LaunchpadColor.Red);
+                    availableColors.Add(DeviceManager.LaunchpadColor.Yellow);
+                    updateColors();
+                    break;
+                case "Launchpad Mini":
+                    availableColors.Clear();
+                    availableColors.Add(DeviceManager.LaunchpadColor.Green);
+                    availableColors.Add(DeviceManager.LaunchpadColor.Lime);
+                    availableColors.Add(DeviceManager.LaunchpadColor.Orange);
+                    availableColors.Add(DeviceManager.LaunchpadColor.Red);
+                    availableColors.Add(DeviceManager.LaunchpadColor.Yellow);
+                    updateColors();
+                    break;
+                case "Launchpad Pro":
+                    availableColors.Clear();
+                    availableColors.Add(DeviceManager.LaunchpadColor.Blue);
+                    availableColors.Add(DeviceManager.LaunchpadColor.Green);
+                    availableColors.Add(DeviceManager.LaunchpadColor.LightBlue);
+                    availableColors.Add(DeviceManager.LaunchpadColor.Lime);
+                    availableColors.Add(DeviceManager.LaunchpadColor.Orange);
+                    availableColors.Add(DeviceManager.LaunchpadColor.Red);
+                    availableColors.Add(DeviceManager.LaunchpadColor.White);
+                    availableColors.Add(DeviceManager.LaunchpadColor.Yellow);
+                    updateColors();
+                    break;
+                case "Launchpad MK2":
+                    availableColors.Clear();
+                    availableColors.Add(DeviceManager.LaunchpadColor.Blue);
+                    availableColors.Add(DeviceManager.LaunchpadColor.Green);
+                    availableColors.Add(DeviceManager.LaunchpadColor.LightBlue);
+                    availableColors.Add(DeviceManager.LaunchpadColor.Lime);
+                    availableColors.Add(DeviceManager.LaunchpadColor.Orange);
+                    availableColors.Add(DeviceManager.LaunchpadColor.Red);
+                    availableColors.Add(DeviceManager.LaunchpadColor.White);
+                    availableColors.Add(DeviceManager.LaunchpadColor.Yellow);
+                    updateColors();
+                    break;
+                default:
+                    break;
+            }
         }
 
         public void populateLEDs(int sizex, int sizey)
@@ -258,7 +360,8 @@ namespace Launchpad_LED_Editor
                     panel.BackColor = Color.Gray;
                     panel.Location = new Point(5 + (i * 52), 12 + (f * 52));
                     panel.Size = new Size(50, 50);
-                    panel.Click += new EventHandler(led_click);
+                    panel.MouseDown += new MouseEventHandler(led_mouseDown);
+                    panel.MouseMove += new MouseEventHandler(led_mouseMove);
                     ledPanels[i, f] = panel;
                     ledGroup.Controls.Add(panel);
                 }
@@ -273,7 +376,8 @@ namespace Launchpad_LED_Editor
                     panel.BackColor = Color.Gray;
                     panel.Location = new Point(seperator_x_width + (i * 52), 12 + (f * 52));
                     panel.Size = new Size(50, 50);
-                    panel.Click += new EventHandler(led_click);
+                    panel.MouseDown += new MouseEventHandler(led_mouseDown);
+                    panel.MouseMove += new MouseEventHandler(led_mouseMove);
                     ledPanels[i, f] = panel;
                     ledGroup.Controls.Add(panel);
                 }
@@ -288,7 +392,8 @@ namespace Launchpad_LED_Editor
                     panel.BackColor = Color.Gray;
                     panel.Location = new Point(seperator_x_width + (i * 52), 12 + seperator_y_width + (f * 52));
                     panel.Size = new Size(50, 50);
-                    panel.Click += new EventHandler(led_click);
+                    panel.MouseDown += new MouseEventHandler(led_mouseDown);
+                    panel.MouseMove += new MouseEventHandler(led_mouseMove);
                     ledPanels[i, f] = panel;
                     ledGroup.Controls.Add(panel);
                 }
@@ -303,31 +408,67 @@ namespace Launchpad_LED_Editor
                     panel.BackColor = Color.Gray;
                     panel.Location = new Point(5 + (i * 52), 12 + seperator_y_width + (f * 52));
                     panel.Size = new Size(50, 50);
-                    panel.Click += new EventHandler(led_click);
+                    panel.MouseDown += new MouseEventHandler(led_mouseDown);
+                    panel.MouseMove += new MouseEventHandler(led_mouseMove);
                     ledPanels[i, f] = panel;
                     ledGroup.Controls.Add(panel);
                 }
             }
         }
 
-        private void led_click(object sender, EventArgs e)
+        private void led_mouseDown(object sender, MouseEventArgs e)
         {
-            Panel some = sender as Panel;
-
-            string[] split = some.Name.Split('_');
+            Panel p = sender as Panel;
+            string[] split = p.Name.Split('_');
             int led_x = int.Parse(split[1]);
             int led_y = int.Parse(split[2]);
             Pitch led_pitch = DeviceManager.matrixToNote(led_y, led_x);
 
-            if (DeviceManager.targetOutput != null && DeviceManager.targetOutput.IsOpen)
+            if (e.Button == MouseButtons.Left)
             {
-                DeviceManager.targetOutput.SendNoteOn(0, led_pitch, DeviceManager.colorToVelo(currentPaintingColor));
-                Console.WriteLine("Painting color is " + currentPaintingColor.ToString());
-                some.BackColor = currentPaintingColor;
+                if (DeviceManager.targetOutput != null && DeviceManager.targetOutput.IsOpen)
+                {
+                    DeviceManager.targetOutput.SendNoteOn(0, led_pitch, DeviceManager.colorToVelo(currentPaintingColor));
+                    p.BackColor = currentPaintingColor;
+                }
+
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+                if (DeviceManager.targetOutput != null && DeviceManager.targetOutput.IsOpen)
+                {
+                    DeviceManager.targetOutput.SendNoteOn(0, led_pitch, DeviceManager.colorToVelo(Color.Gray));
+                    p.BackColor = Color.Gray;
+                }
             }
 
-            transparentPanel1.Hide();
-            transparentPanel1.Show();          
+            p.Capture = false;
+        }
+
+        private void led_mouseMove(object sender, MouseEventArgs e)
+        {
+            Panel p = sender as Panel;
+            string[] split = p.Name.Split('_');
+            int led_x = int.Parse(split[1]);
+            int led_y = int.Parse(split[2]);
+            Pitch led_pitch = DeviceManager.matrixToNote(led_y, led_x);
+
+            if (e.Button == MouseButtons.Left)
+            {
+                if (DeviceManager.targetOutput != null && DeviceManager.targetOutput.IsOpen)
+                {
+                    DeviceManager.targetOutput.SendNoteOn(0, led_pitch, DeviceManager.colorToVelo(currentPaintingColor));
+                    p.BackColor = currentPaintingColor;
+                }
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+                if (DeviceManager.targetOutput != null && DeviceManager.targetOutput.IsOpen)
+                {
+                    DeviceManager.targetOutput.SendNoteOn(0, led_pitch, DeviceManager.colorToVelo(Color.Gray));
+                    p.BackColor = Color.Gray;
+                }
+            }
         }
 
         //Colors
@@ -383,6 +524,40 @@ namespace Launchpad_LED_Editor
             currentPaintingColor = color;
         }
 
+        public void updateColors()
+        {
+            if (availableColors.Contains(DeviceManager.LaunchpadColor.Blue))
+            {
+                panel_blue.Enabled = true;
+                panel_blue.BackColor = Color.Blue;
+            }
+            else
+            {
+                panel_blue.Enabled = false;
+                panel_blue.BackColor = Color.LightGray;
+            }
+            if (availableColors.Contains(DeviceManager.LaunchpadColor.LightBlue))
+            {
+                panel_lightBlue.Enabled = true;
+                panel_lightBlue.BackColor = Color.LightBlue;
+            }
+            else
+            {
+                panel_lightBlue.Enabled = false;
+                panel_lightBlue.BackColor = Color.LightGray;
+            }
+            if (availableColors.Contains(DeviceManager.LaunchpadColor.White))
+            {
+                panel_white.Enabled = true;
+                panel_white.BackColor = Color.White;
+            }
+            else
+            {
+                panel_white.Enabled = false;
+                panel_white.BackColor = Color.LightGray;
+            }
+        }
+
         public void SysExAnswer(SysExMessage m)
         {
             byte[] message = m.Data;
@@ -406,14 +581,13 @@ namespace Launchpad_LED_Editor
         {
             if (DeviceManager.targetOutput != null && isScrolling == false && String.IsNullOrEmpty(scroll_Text.Text) == false && currentPaintingColor != Color.Gray)
             {
-                //Format: SysEx header + Color + Loop + Text + SysEx end
+                //Format: SysEx header + TextScroll Operation ID + Color + Loop + Speed + Text + SysEx end
                 byte[] text = DeviceManager.stringToAscii(scroll_Text.Text);
                 byte opid = 20;
                 byte color = (byte)DeviceManager.colorToVelo(currentPaintingColor);
                 byte loop = Convert.ToByte(scroll_Loop.Checked);
                 byte speed = (byte)scroll_Speed.Value;
-                byte[] args = { opid, color, loop, speed };
-
+                byte[] args = { opid, color, loop, speed};
                 byte[] final = sysex_header.Concat(args.Concat(text.Concat(sysex_end))).ToArray();
 
                 foreach (byte item in final)
@@ -474,6 +648,29 @@ namespace Launchpad_LED_Editor
             Rectangle r1 = new Rectangle(10, 15, 25, 25);
 
             Gfx.RotateRect(g, r1, 45, Color.Black);
+        }
+
+        private void timer_UpdateCenter_Tick(object sender, EventArgs e)
+        {
+            transparentPanel1.Hide();
+            transparentPanel1.Show();
+        }
+
+        private void colors_Edit_Click(object sender, EventArgs e)
+        {
+            colorsform.Show();
+            colorsform.ShowInTaskbar = false;
+            colors_Edit.Enabled = false;
+            timer_checkColorWindow.Enabled = true;
+        }
+
+        private void timer_checkColorWindow_Tick(object sender, EventArgs e)
+        {
+            if (colorsform.Visible == false)
+            {
+                colors_Edit.Enabled = true;
+                timer_checkColorWindow.Enabled = false;
+            }
         }
     }
 }

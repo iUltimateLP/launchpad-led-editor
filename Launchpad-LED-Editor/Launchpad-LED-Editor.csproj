@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GUI\CustomColors.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\CustomColors.Designer.cs">
+      <DependentUpon>CustomColors.cs</DependentUpon>
+    </Compile>
     <Compile Include="DeviceManager.cs" />
     <Compile Include="ExtendedGraphics.cs">
       <SubType>Component</SubType>
@@ -64,6 +70,9 @@
     <Compile Include="GUI\TestingForm.Designer.cs">
       <DependentUpon>TestingForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="GUI\CustomColors.resx">
+      <DependentUpon>CustomColors.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>

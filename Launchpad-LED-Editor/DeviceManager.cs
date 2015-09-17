@@ -33,6 +33,18 @@ namespace Launchpad_LED_Editor
             { Pitch.BNeg1, Pitch.C0, Pitch.CSharp0, Pitch.D0, Pitch.DSharp0, Pitch.E0, Pitch.F0, Pitch.FSharp0 }
         };
 
+        public enum LaunchpadColor
+        {
+            Red,
+            Green,
+            Yellow,
+            Orange,
+            Blue,
+            LightBlue,
+            White,
+            Lime
+        }
+
         //Function to return all MIDI input devices
         public static InputDevice[] GetAllInputDevices()
         {

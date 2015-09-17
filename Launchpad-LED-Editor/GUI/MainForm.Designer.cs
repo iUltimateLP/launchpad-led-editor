@@ -67,7 +67,10 @@
             this.scroll_Text = new System.Windows.Forms.TextBox();
             this.mainToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.errorBubble = new System.Windows.Forms.ToolTip(this.components);
+            this.timer_UpdateCenter = new System.Windows.Forms.Timer(this.components);
+            this.colors_Edit = new System.Windows.Forms.Button();
             this.transparentPanel1 = new Launchpad_LED_Editor.TransparentPanel();
+            this.timer_checkColorWindow = new System.Windows.Forms.Timer(this.components);
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.ledGroup.SuspendLayout();
@@ -108,7 +111,6 @@
             this.launchpadModels.ForeColor = System.Drawing.Color.Gold;
             this.launchpadModels.FormattingEnabled = true;
             this.launchpadModels.Items.AddRange(new object[] {
-            "Launchpad",
             "Launchpad MK2",
             "Launchpad Mini",
             "Launchpad Pro",
@@ -249,6 +251,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.colors_Edit);
             this.groupBox2.Controls.Add(this.panel_currentColor);
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this.tableLayoutPanel1);
@@ -307,7 +310,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(253, 51);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(250, 53);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // panel_red
@@ -394,9 +397,9 @@
             // 
             this.panel_clear.BackColor = System.Drawing.Color.Gray;
             this.panel_clear.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel_clear.Location = new System.Drawing.Point(228, 28);
+            this.panel_clear.Location = new System.Drawing.Point(228, 29);
             this.panel_clear.Name = "panel_clear";
-            this.panel_clear.Size = new System.Drawing.Size(22, 20);
+            this.panel_clear.Size = new System.Drawing.Size(19, 19);
             this.panel_clear.TabIndex = 8;
             this.panel_clear.Click += new System.EventHandler(this.panel_clear_Click);
             // 
@@ -519,6 +522,24 @@
             this.errorBubble.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Warning;
             this.errorBubble.ToolTipTitle = "Something strange.";
             // 
+            // timer_UpdateCenter
+            // 
+            this.timer_UpdateCenter.Enabled = true;
+            this.timer_UpdateCenter.Interval = 500;
+            this.timer_UpdateCenter.Tick += new System.EventHandler(this.timer_UpdateCenter_Tick);
+            // 
+            // colors_Edit
+            // 
+            this.colors_Edit.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.colors_Edit.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.colors_Edit.Location = new System.Drawing.Point(217, 78);
+            this.colors_Edit.Name = "colors_Edit";
+            this.colors_Edit.Size = new System.Drawing.Size(45, 23);
+            this.colors_Edit.TabIndex = 14;
+            this.colors_Edit.Text = "Edit";
+            this.colors_Edit.UseVisualStyleBackColor = true;
+            this.colors_Edit.Click += new System.EventHandler(this.colors_Edit_Click);
+            // 
             // transparentPanel1
             // 
             this.transparentPanel1.Location = new System.Drawing.Point(191, 192);
@@ -526,6 +547,11 @@
             this.transparentPanel1.Size = new System.Drawing.Size(50, 50);
             this.transparentPanel1.TabIndex = 0;
             this.transparentPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.transparentPanel1_Paint);
+            // 
+            // timer_checkColorWindow
+            // 
+            this.timer_checkColorWindow.Interval = 500;
+            this.timer_checkColorWindow.Tick += new System.EventHandler(this.timer_checkColorWindow_Tick);
             // 
             // MainForm
             // 
@@ -598,6 +624,9 @@
         private System.Windows.Forms.Button scroll_Stop;
         private System.Windows.Forms.ToolTip errorBubble;
         private TransparentPanel transparentPanel1;
+        private System.Windows.Forms.Timer timer_UpdateCenter;
+        private System.Windows.Forms.Button colors_Edit;
+        private System.Windows.Forms.Timer timer_checkColorWindow;
     }
 }
 
