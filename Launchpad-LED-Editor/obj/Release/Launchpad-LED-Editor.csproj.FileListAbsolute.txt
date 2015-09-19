@@ -1,0 +1,15 @@
+C:\Users\Johnny\Desktop\launchpad-led-editor-sysex\Launchpad-LED-Editor\bin\Release\Launchpad-LED-Editor.exe.config
+C:\Users\Johnny\Desktop\launchpad-led-editor-sysex\Launchpad-LED-Editor\bin\Release\Launchpad-LED-Editor.exe
+C:\Users\Johnny\Desktop\launchpad-led-editor-sysex\Launchpad-LED-Editor\bin\Release\Launchpad-LED-Editor.pdb
+C:\Users\Johnny\Desktop\launchpad-led-editor-sysex\Launchpad-LED-Editor\bin\Release\Midi.dll
+C:\Users\Johnny\Desktop\launchpad-led-editor-sysex\Launchpad-LED-Editor\bin\Release\Midi.pdb
+C:\Users\Johnny\Desktop\launchpad-led-editor-sysex\Launchpad-LED-Editor\bin\Release\Midi.xml
+C:\Users\Johnny\Desktop\launchpad-led-editor-sysex\Launchpad-LED-Editor\obj\Release\Launchpad-LED-Editor.csprojResolveAssemblyReference.cache
+C:\Users\Johnny\Desktop\launchpad-led-editor-sysex\Launchpad-LED-Editor\obj\Release\Launchpad_LED_Editor.CustomColorAdd.resources
+C:\Users\Johnny\Desktop\launchpad-led-editor-sysex\Launchpad-LED-Editor\obj\Release\Launchpad_LED_Editor.CustomColors.resources
+C:\Users\Johnny\Desktop\launchpad-led-editor-sysex\Launchpad-LED-Editor\obj\Release\Launchpad_LED_Editor.MainForm.resources
+C:\Users\Johnny\Desktop\launchpad-led-editor-sysex\Launchpad-LED-Editor\obj\Release\Launchpad_LED_Editor.Properties.Resources.resources
+C:\Users\Johnny\Desktop\launchpad-led-editor-sysex\Launchpad-LED-Editor\obj\Release\Launchpad_LED_Editor.TestingForm.resources
+C:\Users\Johnny\Desktop\launchpad-led-editor-sysex\Launchpad-LED-Editor\obj\Release\Launchpad-LED-Editor.csproj.GenerateResource.Cache
+C:\Users\Johnny\Desktop\launchpad-led-editor-sysex\Launchpad-LED-Editor\obj\Release\Launchpad-LED-Editor.exe
+C:\Users\Johnny\Desktop\launchpad-led-editor-sysex\Launchpad-LED-Editor\obj\Release\Launchpad-LED-Editor.pdb

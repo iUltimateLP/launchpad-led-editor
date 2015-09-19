@@ -63,20 +63,20 @@ namespace Launchpad_LED_Editor.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap centerpiece {
+        internal static System.Drawing.Bitmap credits {
             get {
-                object obj = ResourceManager.GetObject("centerpiece", resourceCulture);
+                object obj = ResourceManager.GetObject("credits", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Icon ähnlich wie (Symbol).
         /// </summary>
-        internal static System.Drawing.Bitmap centerpiece2 {
+        internal static System.Drawing.Icon icon32x32 {
             get {
-                object obj = ResourceManager.GetObject("centerpiece2", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                object obj = ResourceManager.GetObject("icon32x32", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
     }

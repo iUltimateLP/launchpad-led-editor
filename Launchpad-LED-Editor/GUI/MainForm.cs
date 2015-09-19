@@ -36,6 +36,8 @@ namespace Launchpad_LED_Editor
 
         public List<DeviceManager.LaunchpadColor> availableColors = new List<DeviceManager.LaunchpadColor>();
 
+        public DeviceManager.LaunchpadModels currentLaunchpadModel;
+
         public MainForm()
         {
             InitializeComponent();
@@ -56,6 +58,8 @@ namespace Launchpad_LED_Editor
             populateLEDs(8, 8);
 
             updateColor(Color.Gray);
+
+            populateCustomColors();
 
             mainToolTip.SetToolTip(midi_inputDevices, "Shows available input devices.");
             mainToolTip.SetToolTip(midi_outputDevices, "Shows available output devices.");
@@ -181,18 +185,22 @@ namespace Launchpad_LED_Editor
                 if (DeviceManager.targetInput.Name == "Launchpad S")
                 {
                     launchpadModels.SelectedItem = launchpadModels.Items[3];
+                    currentLaunchpadModel = DeviceManager.LaunchpadModels.LaunchpadS;
                 }
                 else if (DeviceManager.targetInput.Name == "Launchpad MK2")
                 {
                     launchpadModels.SelectedItem = launchpadModels.Items[0];
+                    currentLaunchpadModel = DeviceManager.LaunchpadModels.LaunchpadMk2;
                 }
                 else if (DeviceManager.targetInput.Name == "Launchpad Mini")
                 {
                     launchpadModels.SelectedItem = launchpadModels.Items[1];
+                    currentLaunchpadModel = DeviceManager.LaunchpadModels.LaunchpadMini;
                 }
                 else if (DeviceManager.targetInput.Name == "Launchpad Pro")
                 {
                     launchpadModels.SelectedItem = launchpadModels.Items[2];
+                    currentLaunchpadModel = DeviceManager.LaunchpadModels.LaunchpadPro;
                 }
                 else
                 {
@@ -204,18 +212,22 @@ namespace Launchpad_LED_Editor
                 if (DeviceManager.targetOutput.Name == "Launchpad S")
                 {
                     launchpadModels.SelectedItem = launchpadModels.Items[3];
+                    currentLaunchpadModel = DeviceManager.LaunchpadModels.LaunchpadS;
                 }
                 else if (DeviceManager.targetOutput.Name == "Launchpad MK2")
                 {
                     launchpadModels.SelectedItem = launchpadModels.Items[0];
+                    currentLaunchpadModel = DeviceManager.LaunchpadModels.LaunchpadMk2;
                 }
                 else if (DeviceManager.targetOutput.Name == "Launchpad Mini")
                 {
                     launchpadModels.SelectedItem = launchpadModels.Items[1];
+                    currentLaunchpadModel = DeviceManager.LaunchpadModels.LaunchpadMini;
                 }
                 else if (DeviceManager.targetOutput.Name == "Launchpad Pro")
                 {
                     launchpadModels.SelectedItem = launchpadModels.Items[2];
+                    currentLaunchpadModel = DeviceManager.LaunchpadModels.LaunchpadPro;
                 }
                 else
                 {
@@ -267,6 +279,17 @@ namespace Launchpad_LED_Editor
                 }
             }
 
+        }
+
+        public void UpdateCustomColors()
+        {
+            CustomColors.loadColorsFromConfig();
+            for(int i = 0; i < customtable.Controls.Count; i++)
+            {
+                customtable.Controls.Remove(customtable.Controls[i]);
+            }
+            customtable.Refresh();
+            populateCustomColors();
         }
 
         public void ResetAllNotes()
@@ -342,6 +365,32 @@ namespace Launchpad_LED_Editor
                 default:
                     break;
             }
+        }
+
+        public void populateCustomColors()
+        {
+            Dictionary<string, Color> configVals = new Dictionary<string, Color>();
+            CustomColors.loadColorsFromConfig();
+            configVals = CustomColors.previewColors;
+            customtable.Controls.Clear();
+            for(int i = 0; i < configVals.Count; i++)
+            {
+                Color c = configVals.ElementAt(i).Value;
+                Panel p = new Panel();
+                p.Size = new Size(19, 19);
+                p.BackColor = c;
+                p.BorderStyle = BorderStyle.Fixed3D;
+                p.Name = configVals.ElementAt(i).Key;
+                p.Click += new EventHandler(customColorClickedEvent);
+                customtable.Controls.Add(p);
+            }
+        }
+
+        public void customColorClickedEvent(object sender, EventArgs e)
+        {
+            Panel p = sender as Panel;
+            currentPaintingColor = p.BackColor;
+            updateColor(p.BackColor);
         }
 
         public void populateLEDs(int sizex, int sizey)
@@ -428,7 +477,8 @@ namespace Launchpad_LED_Editor
             {
                 if (DeviceManager.targetOutput != null && DeviceManager.targetOutput.IsOpen)
                 {
-                    DeviceManager.targetOutput.SendNoteOn(0, led_pitch, DeviceManager.colorToVelo(currentPaintingColor));
+                    DeviceManager.targetOutput.SendNoteOn(0, led_pitch, DeviceManager.colorToVelo(currentPaintingColor, currentLaunchpadModel));
+                    
                     p.BackColor = currentPaintingColor;
                 }
 
@@ -437,7 +487,7 @@ namespace Launchpad_LED_Editor
             {
                 if (DeviceManager.targetOutput != null && DeviceManager.targetOutput.IsOpen)
                 {
-                    DeviceManager.targetOutput.SendNoteOn(0, led_pitch, DeviceManager.colorToVelo(Color.Gray));
+                    DeviceManager.targetOutput.SendNoteOn(0, led_pitch, DeviceManager.colorToVelo(Color.Gray, currentLaunchpadModel));
                     p.BackColor = Color.Gray;
                 }
             }
@@ -457,7 +507,7 @@ namespace Launchpad_LED_Editor
             {
                 if (DeviceManager.targetOutput != null && DeviceManager.targetOutput.IsOpen)
                 {
-                    DeviceManager.targetOutput.SendNoteOn(0, led_pitch, DeviceManager.colorToVelo(currentPaintingColor));
+                    DeviceManager.targetOutput.SendNoteOn(0, led_pitch, DeviceManager.colorToVelo(currentPaintingColor, currentLaunchpadModel));
                     p.BackColor = currentPaintingColor;
                 }
             }
@@ -465,7 +515,7 @@ namespace Launchpad_LED_Editor
             {
                 if (DeviceManager.targetOutput != null && DeviceManager.targetOutput.IsOpen)
                 {
-                    DeviceManager.targetOutput.SendNoteOn(0, led_pitch, DeviceManager.colorToVelo(Color.Gray));
+                    DeviceManager.targetOutput.SendNoteOn(0, led_pitch, DeviceManager.colorToVelo(Color.Gray, currentLaunchpadModel));
                     p.BackColor = Color.Gray;
                 }
             }
@@ -584,17 +634,12 @@ namespace Launchpad_LED_Editor
                 //Format: SysEx header + TextScroll Operation ID + Color + Loop + Speed + Text + SysEx end
                 byte[] text = DeviceManager.stringToAscii(scroll_Text.Text);
                 byte opid = 20;
-                byte color = (byte)DeviceManager.colorToVelo(currentPaintingColor);
+                byte color = (byte)DeviceManager.colorToVelo(currentPaintingColor, currentLaunchpadModel);
                 byte loop = Convert.ToByte(scroll_Loop.Checked);
                 byte speed = (byte)scroll_Speed.Value;
                 byte[] args = { opid, color, loop, speed};
                 byte[] final = sysex_header.Concat(args.Concat(text.Concat(sysex_end))).ToArray();
 
-                foreach (byte item in final)
-                {
-                    Console.Write(item.ToString() + "-");
-                }
-                Console.WriteLine("");
                 DeviceManager.targetOutput.SendSysEx(final);
                 isScrolling = true;
                 isScrollLooping = scroll_Loop.Checked;
@@ -654,6 +699,7 @@ namespace Launchpad_LED_Editor
         {
             transparentPanel1.Hide();
             transparentPanel1.Show();
+
         }
 
         private void colors_Edit_Click(object sender, EventArgs e)
@@ -662,6 +708,7 @@ namespace Launchpad_LED_Editor
             colorsform.ShowInTaskbar = false;
             colors_Edit.Enabled = false;
             timer_checkColorWindow.Enabled = true;
+            colorsform.insti = this;
         }
 
         private void timer_checkColorWindow_Tick(object sender, EventArgs e)

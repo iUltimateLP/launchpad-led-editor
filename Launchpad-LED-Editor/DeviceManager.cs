@@ -22,6 +22,8 @@ namespace Launchpad_LED_Editor
         public static InputDevice targetInput = null;
         public static OutputDevice targetOutput = null;
 
+        #region LaunchpadData
+        //Which key equals which note?
         public static Pitch[,] sessionNotes = new Pitch[8, 8] {
             { Pitch.A5, Pitch.ASharp5, Pitch.B5, Pitch.C6, Pitch.CSharp6, Pitch.D6, Pitch.DSharp6, Pitch.E6 },
             { Pitch.B4, Pitch.C5, Pitch.CSharp5, Pitch.D5, Pitch.DSharp5, Pitch.E5, Pitch.F5, Pitch.FSharp5 },
@@ -33,6 +35,36 @@ namespace Launchpad_LED_Editor
             { Pitch.BNeg1, Pitch.C0, Pitch.CSharp0, Pitch.D0, Pitch.DSharp0, Pitch.E0, Pitch.F0, Pitch.FSharp0 }
         };
 
+        public enum LaunchpadModels
+        {
+            LaunchpadS,
+            LaunchpadPro,
+            LaunchpadMini,
+            LaunchpadMk2
+        }
+
+        //Launchpad MK2, Pro, 
+        public static Dictionary<string, int> LaunchpadMk2Colors = new Dictionary<string, int> {
+            {"Red", 72},
+            {"Green", 63},
+            {"Yellow", 13},
+            {"Orange", 9},
+            {"Blue", 41},
+            {"LightBlue", 36},
+            {"White", 3},
+            {"Lime", 17}
+        };
+
+        //Launchpad S, Mini
+        public static Dictionary<string, int> LaunchpadSColors = new Dictionary<string, int> {
+            {"Red", 15},
+            {"Green", 60},
+            {"Yellow", 62},
+            {"Orange", 47},
+            {"Lime", 61}
+        };
+
+        //Available Default Colors
         public enum LaunchpadColor
         {
             Red,
@@ -44,6 +76,9 @@ namespace Launchpad_LED_Editor
             White,
             Lime
         }
+
+        public static int devid = 0;
+        #endregion
 
         //Function to return all MIDI input devices
         public static InputDevice[] GetAllInputDevices()
@@ -89,26 +124,43 @@ namespace Launchpad_LED_Editor
             return sessionNotes[x, y];
         }
 
-        public static int colorToVelo(Color color)
+        public static int colorToVelo(Color color, LaunchpadModels model)
         {
-            if (color == Color.Red)
-                return 72;
-            if (color == Color.Green)
-                return 63;
-            if (color == Color.Yellow)
-                return 13;
-            if (color == Color.Orange)
-                return 9;
-            if (color == Color.Blue)
-                return 41;
-            if (color == Color.LightBlue)
-                return 36;
-            if (color == Color.White)
-                return 3;
-            if (color == Color.Lime)
-                return 17;
+            switch (model)
+            {
+                case LaunchpadModels.LaunchpadS:
+                    devid = 1;
+                    break;
+                case LaunchpadModels.LaunchpadPro:
+                    devid = 2;
+                    break;
+                case LaunchpadModels.LaunchpadMini:
+                    devid = 1;
+                    break;
+                case LaunchpadModels.LaunchpadMk2:
+                    devid = 2;
+                    break;
+                default:
+                    break;
+            }
+            if (devid == 1 && LaunchpadSColors.ContainsKey(color.Name))
+            {
+                return LaunchpadSColors[color.Name];
+            }
+            else if (devid == 2 && LaunchpadMk2Colors.ContainsKey(color.Name))
+            {
+                return LaunchpadMk2Colors[color.Name];                
+            }
+            else if (CustomColors.previewColors.ContainsValue(color))
+            {
+                Dictionary<string, int> velos = CustomColors.loadColorsFromConfig();
+                string name = CustomColors.previewColors.FirstOrDefault(x => x.Value == color).Key;
+                return velos[name];
+            }
             else
+            {
                 return 0;
+            }
         }
 
         public static byte[] stringToAscii(string str)

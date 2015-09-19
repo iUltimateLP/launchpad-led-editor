@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.launchpadModels = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.midi_testDevices = new System.Windows.Forms.Button();
             this.midi_OutputState = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -43,7 +43,10 @@
             this.midi_inputDevices = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.ledGroup = new System.Windows.Forms.GroupBox();
+            this.transparentPanel1 = new Launchpad_LED_Editor.TransparentPanel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.customtable = new System.Windows.Forms.TableLayoutPanel();
+            this.colors_Edit = new System.Windows.Forms.Button();
             this.panel_currentColor = new System.Windows.Forms.Panel();
             this.label6 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -68,16 +71,19 @@
             this.mainToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.errorBubble = new System.Windows.Forms.ToolTip(this.components);
             this.timer_UpdateCenter = new System.Windows.Forms.Timer(this.components);
-            this.colors_Edit = new System.Windows.Forms.Button();
-            this.transparentPanel1 = new Launchpad_LED_Editor.TransparentPanel();
             this.timer_checkColorWindow = new System.Windows.Forms.Timer(this.components);
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.ledGroup.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.scroll_Speed)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -130,15 +136,6 @@
             this.label3.Size = new System.Drawing.Size(119, 16);
             this.label3.TabIndex = 10;
             this.label3.Text = "Launchpad Model:";
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Gold;
-            this.pictureBox1.Location = new System.Drawing.Point(8, 143);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(253, 3);
-            this.pictureBox1.TabIndex = 9;
-            this.pictureBox1.TabStop = false;
             // 
             // midi_testDevices
             // 
@@ -249,26 +246,71 @@
             this.ledGroup.TabIndex = 1;
             this.ledGroup.TabStop = false;
             // 
+            // transparentPanel1
+            // 
+            this.transparentPanel1.Location = new System.Drawing.Point(191, 192);
+            this.transparentPanel1.Name = "transparentPanel1";
+            this.transparentPanel1.Size = new System.Drawing.Size(50, 50);
+            this.transparentPanel1.TabIndex = 0;
+            this.transparentPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.transparentPanel1_Paint);
+            // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.pictureBox2);
+            this.groupBox2.Controls.Add(this.customtable);
             this.groupBox2.Controls.Add(this.colors_Edit);
             this.groupBox2.Controls.Add(this.panel_currentColor);
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this.tableLayoutPanel1);
+            this.groupBox2.Controls.Add(this.panel_clear);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
             this.groupBox2.ForeColor = System.Drawing.Color.Gold;
             this.groupBox2.Location = new System.Drawing.Point(4, 187);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(268, 107);
+            this.groupBox2.Size = new System.Drawing.Size(268, 154);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Colors";
+            // 
+            // customtable
+            // 
+            this.customtable.ColumnCount = 10;
+            this.customtable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.customtable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.customtable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.customtable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.customtable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.customtable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.customtable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.customtable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.customtable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.customtable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.customtable.Location = new System.Drawing.Point(8, 68);
+            this.customtable.Name = "customtable";
+            this.customtable.RowCount = 2;
+            this.customtable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.customtable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.customtable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.customtable.Size = new System.Drawing.Size(249, 51);
+            this.customtable.TabIndex = 15;
+            // 
+            // colors_Edit
+            // 
+            this.colors_Edit.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.colors_Edit.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.colors_Edit.Location = new System.Drawing.Point(217, 125);
+            this.colors_Edit.Name = "colors_Edit";
+            this.colors_Edit.Size = new System.Drawing.Size(45, 23);
+            this.colors_Edit.TabIndex = 14;
+            this.colors_Edit.Text = "Edit";
+            this.colors_Edit.UseVisualStyleBackColor = true;
+            this.colors_Edit.Click += new System.EventHandler(this.colors_Edit_Click);
             // 
             // panel_currentColor
             // 
             this.panel_currentColor.BackColor = System.Drawing.Color.Gray;
             this.panel_currentColor.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel_currentColor.Location = new System.Drawing.Point(98, 80);
+            this.panel_currentColor.Location = new System.Drawing.Point(97, 127);
             this.panel_currentColor.Name = "panel_currentColor";
             this.panel_currentColor.Size = new System.Drawing.Size(20, 20);
             this.panel_currentColor.TabIndex = 13;
@@ -277,7 +319,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(8, 81);
+            this.label6.Location = new System.Drawing.Point(7, 128);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(88, 16);
             this.label6.TabIndex = 12;
@@ -304,13 +346,12 @@
             this.tableLayoutPanel1.Controls.Add(this.panel_lime, 7, 0);
             this.tableLayoutPanel1.Controls.Add(this.panel_green, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.panel_white, 6, 0);
-            this.tableLayoutPanel1.Controls.Add(this.panel_clear, 9, 1);
+            this.tableLayoutPanel1.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.AddColumns;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(8, 21);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(250, 53);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(250, 25);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // panel_red
@@ -397,7 +438,7 @@
             // 
             this.panel_clear.BackColor = System.Drawing.Color.Gray;
             this.panel_clear.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel_clear.Location = new System.Drawing.Point(228, 29);
+            this.panel_clear.Location = new System.Drawing.Point(239, 21);
             this.panel_clear.Name = "panel_clear";
             this.panel_clear.Size = new System.Drawing.Size(19, 19);
             this.panel_clear.TabIndex = 8;
@@ -415,9 +456,9 @@
             this.groupBox3.Controls.Add(this.scroll_Text);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
             this.groupBox3.ForeColor = System.Drawing.Color.Gold;
-            this.groupBox3.Location = new System.Drawing.Point(4, 298);
+            this.groupBox3.Location = new System.Drawing.Point(4, 347);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(268, 136);
+            this.groupBox3.Size = new System.Drawing.Size(268, 138);
             this.groupBox3.TabIndex = 14;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Text Scroll";
@@ -528,42 +569,51 @@
             this.timer_UpdateCenter.Interval = 500;
             this.timer_UpdateCenter.Tick += new System.EventHandler(this.timer_UpdateCenter_Tick);
             // 
-            // colors_Edit
-            // 
-            this.colors_Edit.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.colors_Edit.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.colors_Edit.Location = new System.Drawing.Point(217, 78);
-            this.colors_Edit.Name = "colors_Edit";
-            this.colors_Edit.Size = new System.Drawing.Size(45, 23);
-            this.colors_Edit.TabIndex = 14;
-            this.colors_Edit.Text = "Edit";
-            this.colors_Edit.UseVisualStyleBackColor = true;
-            this.colors_Edit.Click += new System.EventHandler(this.colors_Edit_Click);
-            // 
-            // transparentPanel1
-            // 
-            this.transparentPanel1.Location = new System.Drawing.Point(191, 192);
-            this.transparentPanel1.Name = "transparentPanel1";
-            this.transparentPanel1.Size = new System.Drawing.Size(50, 50);
-            this.transparentPanel1.TabIndex = 0;
-            this.transparentPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.transparentPanel1_Paint);
-            // 
             // timer_checkColorWindow
             // 
-            this.timer_checkColorWindow.Interval = 500;
+            this.timer_checkColorWindow.Interval = 250;
             this.timer_checkColorWindow.Tick += new System.EventHandler(this.timer_checkColorWindow_Tick);
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Image = global::Launchpad_LED_Editor.Properties.Resources.credits;
+            this.pictureBox3.Location = new System.Drawing.Point(278, 440);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(428, 45);
+            this.pictureBox3.TabIndex = 15;
+            this.pictureBox3.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackColor = System.Drawing.Color.Gold;
+            this.pictureBox2.Location = new System.Drawing.Point(6, 55);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(253, 3);
+            this.pictureBox2.TabIndex = 12;
+            this.pictureBox2.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Gold;
+            this.pictureBox1.Location = new System.Drawing.Point(8, 143);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(253, 3);
+            this.pictureBox1.TabIndex = 9;
+            this.pictureBox1.TabStop = false;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.ClientSize = new System.Drawing.Size(712, 439);
+            this.ClientSize = new System.Drawing.Size(712, 488);
+            this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.ledGroup);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -571,7 +621,6 @@
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ledGroup.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
@@ -579,6 +628,9 @@
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.scroll_Speed)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -627,6 +679,9 @@
         private System.Windows.Forms.Timer timer_UpdateCenter;
         private System.Windows.Forms.Button colors_Edit;
         private System.Windows.Forms.Timer timer_checkColorWindow;
+        private System.Windows.Forms.TableLayoutPanel customtable;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.PictureBox pictureBox3;
     }
 }
 

@@ -27,3 +27,4 @@ C:\Users\Johnny\Desktop\launchpad-led-editor-sysex\Launchpad-LED-Editor\obj\Debu
 C:\Users\Johnny\Desktop\launchpad-led-editor-sysex\Launchpad-LED-Editor\obj\Debug\Launchpad-LED-Editor.csproj.GenerateResource.Cache
 C:\Users\Johnny\Desktop\launchpad-led-editor-sysex\Launchpad-LED-Editor\obj\Debug\Launchpad_LED_Editor.MainForm.resources
 C:\Users\Johnny\Desktop\launchpad-led-editor-sysex\Launchpad-LED-Editor\obj\Debug\Launchpad_LED_Editor.CustomColors.resources
+C:\Users\Johnny\Desktop\launchpad-led-editor-sysex\Launchpad-LED-Editor\obj\Debug\Launchpad_LED_Editor.CustomColorAdd.resources

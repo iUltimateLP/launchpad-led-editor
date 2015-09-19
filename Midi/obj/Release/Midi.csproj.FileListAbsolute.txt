@@ -1,0 +1,6 @@
+C:\Users\Johnny\Desktop\launchpad-led-editor-sysex\Midi\bin\Release\Midi.xml
+C:\Users\Johnny\Desktop\launchpad-led-editor-sysex\Midi\bin\Release\Midi.dll
+C:\Users\Johnny\Desktop\launchpad-led-editor-sysex\Midi\bin\Release\Midi.pdb
+C:\Users\Johnny\Desktop\launchpad-led-editor-sysex\Midi\obj\Release\Midi.csprojResolveAssemblyReference.cache
+C:\Users\Johnny\Desktop\launchpad-led-editor-sysex\Midi\obj\Release\Midi.dll
+C:\Users\Johnny\Desktop\launchpad-led-editor-sysex\Midi\obj\Release\Midi.pdb
