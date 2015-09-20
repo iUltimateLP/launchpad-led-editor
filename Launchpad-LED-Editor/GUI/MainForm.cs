@@ -409,6 +409,8 @@ namespace Launchpad_LED_Editor
                     panel.BackColor = Color.Gray;
                     panel.Location = new Point(5 + (i * 52), 12 + (f * 52));
                     panel.Size = new Size(50, 50);
+                    panel.BackgroundImage = Properties.Resources.LedMask;
+                    panel.BackgroundImageLayout = ImageLayout.Stretch;
                     panel.MouseDown += new MouseEventHandler(led_mouseDown);
                     panel.MouseMove += new MouseEventHandler(led_mouseMove);
                     ledPanels[i, f] = panel;
@@ -425,6 +427,8 @@ namespace Launchpad_LED_Editor
                     panel.BackColor = Color.Gray;
                     panel.Location = new Point(seperator_x_width + (i * 52), 12 + (f * 52));
                     panel.Size = new Size(50, 50);
+                    panel.BackgroundImage = Properties.Resources.LedMask;
+                    panel.BackgroundImageLayout = ImageLayout.Stretch;
                     panel.MouseDown += new MouseEventHandler(led_mouseDown);
                     panel.MouseMove += new MouseEventHandler(led_mouseMove);
                     ledPanels[i, f] = panel;
@@ -441,6 +445,8 @@ namespace Launchpad_LED_Editor
                     panel.BackColor = Color.Gray;
                     panel.Location = new Point(seperator_x_width + (i * 52), 12 + seperator_y_width + (f * 52));
                     panel.Size = new Size(50, 50);
+                    panel.BackgroundImage = Properties.Resources.LedMask;
+                    panel.BackgroundImageLayout = ImageLayout.Stretch;
                     panel.MouseDown += new MouseEventHandler(led_mouseDown);
                     panel.MouseMove += new MouseEventHandler(led_mouseMove);
                     ledPanels[i, f] = panel;
@@ -457,6 +463,8 @@ namespace Launchpad_LED_Editor
                     panel.BackColor = Color.Gray;
                     panel.Location = new Point(5 + (i * 52), 12 + seperator_y_width + (f * 52));
                     panel.Size = new Size(50, 50);
+                    panel.BackgroundImage = Properties.Resources.LedMask;
+                    panel.BackgroundImageLayout = ImageLayout.Stretch;
                     panel.MouseDown += new MouseEventHandler(led_mouseDown);
                     panel.MouseMove += new MouseEventHandler(led_mouseMove);
                     ledPanels[i, f] = panel;

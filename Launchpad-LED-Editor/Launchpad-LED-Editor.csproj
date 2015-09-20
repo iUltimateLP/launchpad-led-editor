@@ -134,6 +134,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="credits.png" />
+    <None Include="LedMask.png" />
     <None Include="icon32x32.ico" />
   </ItemGroup>
   <ItemGroup>
