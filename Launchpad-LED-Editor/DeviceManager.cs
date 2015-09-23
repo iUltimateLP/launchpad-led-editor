@@ -35,6 +35,12 @@ namespace Launchpad_LED_Editor
             { Pitch.BNeg1, Pitch.C0, Pitch.CSharp0, Pitch.D0, Pitch.DSharp0, Pitch.E0, Pitch.F0, Pitch.FSharp0 }
         };
 
+        public static Pitch[] sideLEDnotes = new Pitch[]
+        {
+            Pitch.F6, Pitch.G5, Pitch.A4, Pitch.B3, Pitch.CSharp3, Pitch.DSharp2, Pitch.F1, Pitch.G0
+
+        };
+
         public enum LaunchpadModels
         {
             LaunchpadS,
@@ -122,6 +128,11 @@ namespace Launchpad_LED_Editor
         public static Pitch matrixToNote(int x, int y)
         {
             return sessionNotes[x, y];
+        }
+
+        public static Pitch matrixToSideLEDs(int x, int y)
+        {
+            return sideLEDnotes[y];
         }
 
         public static int colorToVelo(Color color, LaunchpadModels model)

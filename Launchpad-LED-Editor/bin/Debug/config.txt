@@ -1,6 +1,0 @@
-Launchpad LED editor config file
-v1.0
-<== DO NOT MODIFY PARTS OF THIS FILE MANUALLY! THIS CAN CAUSE THE APPLICATION TO WORK WRONG! ==>
-
-Chilliges Blau#41^Color [A=255, R=0, G=128, B=255]
-Lila#96^Color [A=255, R=128, G=128, B=255]

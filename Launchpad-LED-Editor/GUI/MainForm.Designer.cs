@@ -33,6 +33,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.launchpadModels = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.midi_testDevices = new System.Windows.Forms.Button();
             this.midi_OutputState = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -43,8 +44,8 @@
             this.midi_inputDevices = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.ledGroup = new System.Windows.Forms.GroupBox();
-            this.transparentPanel1 = new Launchpad_LED_Editor.TransparentPanel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.customtable = new System.Windows.Forms.TableLayoutPanel();
             this.colors_Edit = new System.Windows.Forms.Button();
             this.panel_currentColor = new System.Windows.Forms.Panel();
@@ -73,17 +74,16 @@
             this.timer_UpdateCenter = new System.Windows.Forms.Timer(this.components);
             this.timer_checkColorWindow = new System.Windows.Forms.Timer(this.components);
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.transparentPanel1 = new Launchpad_LED_Editor.TransparentPanel();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.ledGroup.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.scroll_Speed)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -136,6 +136,15 @@
             this.label3.Size = new System.Drawing.Size(119, 16);
             this.label3.TabIndex = 10;
             this.label3.Text = "Launchpad Model:";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Gold;
+            this.pictureBox1.Location = new System.Drawing.Point(8, 143);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(253, 3);
+            this.pictureBox1.TabIndex = 9;
+            this.pictureBox1.TabStop = false;
             // 
             // midi_testDevices
             // 
@@ -242,17 +251,9 @@
             this.ledGroup.ForeColor = System.Drawing.Color.Gold;
             this.ledGroup.Location = new System.Drawing.Point(278, -2);
             this.ledGroup.Name = "ledGroup";
-            this.ledGroup.Size = new System.Drawing.Size(428, 436);
+            this.ledGroup.Size = new System.Drawing.Size(485, 436);
             this.ledGroup.TabIndex = 1;
             this.ledGroup.TabStop = false;
-            // 
-            // transparentPanel1
-            // 
-            this.transparentPanel1.Location = new System.Drawing.Point(191, 192);
-            this.transparentPanel1.Name = "transparentPanel1";
-            this.transparentPanel1.Size = new System.Drawing.Size(50, 50);
-            this.transparentPanel1.TabIndex = 0;
-            this.transparentPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.transparentPanel1_Paint);
             // 
             // groupBox2
             // 
@@ -271,6 +272,15 @@
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Colors";
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackColor = System.Drawing.Color.Gold;
+            this.pictureBox2.Location = new System.Drawing.Point(6, 55);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(253, 3);
+            this.pictureBox2.TabIndex = 12;
+            this.pictureBox2.TabStop = false;
             // 
             // customtable
             // 
@@ -583,30 +593,20 @@
             this.pictureBox3.TabIndex = 15;
             this.pictureBox3.TabStop = false;
             // 
-            // pictureBox2
+            // transparentPanel1
             // 
-            this.pictureBox2.BackColor = System.Drawing.Color.Gold;
-            this.pictureBox2.Location = new System.Drawing.Point(6, 55);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(253, 3);
-            this.pictureBox2.TabIndex = 12;
-            this.pictureBox2.TabStop = false;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Gold;
-            this.pictureBox1.Location = new System.Drawing.Point(8, 143);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(253, 3);
-            this.pictureBox1.TabIndex = 9;
-            this.pictureBox1.TabStop = false;
+            this.transparentPanel1.Location = new System.Drawing.Point(191, 192);
+            this.transparentPanel1.Name = "transparentPanel1";
+            this.transparentPanel1.Size = new System.Drawing.Size(50, 50);
+            this.transparentPanel1.TabIndex = 0;
+            this.transparentPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.transparentPanel1_Paint);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.ClientSize = new System.Drawing.Size(712, 488);
+            this.ClientSize = new System.Drawing.Size(769, 488);
             this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.ledGroup);
             this.Controls.Add(this.groupBox3);
@@ -621,16 +621,16 @@
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ledGroup.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.scroll_Speed)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }

@@ -471,6 +471,72 @@ namespace Launchpad_LED_Editor
                     ledGroup.Controls.Add(panel);
                 }
             }
+            //Circle Buttons
+            for (int i = 0; i < sizey; i++)
+            {
+                circleButton c = new circleButton(Color.Gray, 20, Properties.Resources.LedMask); //Gray primitive
+                c.Name = "circle_" + i;
+                c.Location = new Point(5 + (sizex * 52) + 10, 12 + i  *52 + 5);
+                c.Size = new Size(42, 42);
+                c.MouseDown += new MouseEventHandler(ledSide_mouseDown);
+                c.MouseMove += new MouseEventHandler(ledSide_mouseMove);
+                ledGroup.Controls.Add(c);
+                c.BringToFront();
+            }
+        }
+
+        private void ledSide_mouseDown(object sender, MouseEventArgs e)
+        {
+            circleButton p = sender as circleButton;
+            string[] split = p.Name.Split('_');
+            int led_y = int.Parse(split[1]);
+            Pitch led_pitch = DeviceManager.matrixToSideLEDs(0, led_y);
+            if (e.Button == MouseButtons.Left)
+            {
+                if (DeviceManager.targetOutput != null && DeviceManager.targetOutput.IsOpen)
+                {
+                    DeviceManager.targetOutput.SendNoteOn(0, led_pitch, DeviceManager.colorToVelo(currentPaintingColor, currentLaunchpadModel));
+                    p.c = currentPaintingColor;
+                    p.Refresh();
+                }
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+                if (DeviceManager.targetOutput != null && DeviceManager.targetOutput.IsOpen)
+                {
+                    DeviceManager.targetOutput.SendNoteOn(0, led_pitch, DeviceManager.colorToVelo(Color.Gray, currentLaunchpadModel));
+                    p.c = Color.Gray;
+                    p.Refresh();
+                }
+            }
+
+            p.Capture = false;
+        }
+
+        private void ledSide_mouseMove(object sender, MouseEventArgs e)
+        {
+            circleButton p = sender as circleButton;
+            string[] split = p.Name.Split('_');
+            int led_y = int.Parse(split[1]);
+            Pitch led_pitch = DeviceManager.matrixToSideLEDs(0, led_y);
+            if (e.Button == MouseButtons.Left)
+            {
+                if (DeviceManager.targetOutput != null && DeviceManager.targetOutput.IsOpen)
+                {
+                    DeviceManager.targetOutput.SendNoteOn(0, led_pitch, DeviceManager.colorToVelo(currentPaintingColor, currentLaunchpadModel));
+                    p.c = currentPaintingColor;
+                    p.Refresh();
+                }
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+                if (DeviceManager.targetOutput != null && DeviceManager.targetOutput.IsOpen)
+                {
+                    DeviceManager.targetOutput.SendNoteOn(0, led_pitch, DeviceManager.colorToVelo(Color.Gray, currentLaunchpadModel));
+                    p.c = Color.Gray;
+                    p.Refresh();
+                }
+            }
         }
 
         private void led_mouseDown(object sender, MouseEventArgs e)
