@@ -35,10 +35,26 @@ namespace Launchpad_LED_Editor
             { Pitch.BNeg1, Pitch.C0, Pitch.CSharp0, Pitch.D0, Pitch.DSharp0, Pitch.E0, Pitch.F0, Pitch.FSharp0 }
         };
 
+        public static Pitch[,] sessionNotesS = new Pitch[8, 8] {
+            { Pitch.E3, Pitch.F3, Pitch.FSharp3, Pitch.G3, Pitch.C6, Pitch.CSharp6, Pitch.D6, Pitch.DSharp6 },
+            { Pitch.C3, Pitch.CSharp3, Pitch.D3, Pitch.DSharp3, Pitch.GSharp5, Pitch.A5, Pitch.ASharp5, Pitch.B5 },
+            { Pitch.GSharp2, Pitch.A2, Pitch.ASharp2, Pitch.B2, Pitch.E5, Pitch.F5, Pitch.FSharp5, Pitch.G5 },
+            { Pitch.E2, Pitch.F2, Pitch.FSharp2, Pitch.G2, Pitch.C5, Pitch.CSharp5, Pitch.D5, Pitch.DSharp5 },
+            { Pitch.C2, Pitch.CSharp2, Pitch.D2, Pitch.DSharp2, Pitch.GSharp4, Pitch.A4, Pitch.ASharp4, Pitch.B4 },
+            { Pitch.GSharp1, Pitch.A1, Pitch.ASharp1, Pitch.B1, Pitch.E4, Pitch.F4, Pitch.FSharp4, Pitch.G4 },
+            { Pitch.E1, Pitch.F1, Pitch.FSharp1, Pitch.G1, Pitch.C4, Pitch.CSharp4, Pitch.D4, Pitch.DSharp4 },
+            { Pitch.C1, Pitch.CSharp1, Pitch.D1, Pitch.DSharp1, Pitch.GSharp3, Pitch.A3, Pitch.ASharp3, Pitch.B3 },
+        };
+
         public static Pitch[] sideLEDnotes = new Pitch[]
         {
             Pitch.F6, Pitch.G5, Pitch.A4, Pitch.B3, Pitch.CSharp3, Pitch.DSharp2, Pitch.F1, Pitch.G0
 
+        };
+
+        public static Pitch[] sideLEDnotesS = new Pitch[]
+        {
+            Pitch.E6, Pitch.F6, Pitch.FSharp6, Pitch.G6, Pitch.GSharp6, Pitch.A6, Pitch.ASharp6, Pitch.B6
         };
 
         public enum LaunchpadModels
@@ -125,14 +141,48 @@ namespace Launchpad_LED_Editor
             return null;
         }
 
-        public static Pitch matrixToNote(int x, int y)
+        public static Pitch matrixToNote(int x, int y, LaunchpadModels model)
         {
-            return sessionNotes[x, y];
+            switch (model)
+            {
+                case LaunchpadModels.LaunchpadS:
+                    return sessionNotesS[x, y];
+                    break;
+                case LaunchpadModels.LaunchpadPro:
+                    return sessionNotes[x, y];
+                    break;
+                case LaunchpadModels.LaunchpadMini:
+                    return sessionNotesS[x, y];
+                    break;
+                case LaunchpadModels.LaunchpadMk2:
+                    return sessionNotes[x, y];
+                    break;
+                default:
+                    return Pitch.A0;
+                    break;
+            }
         }
 
-        public static Pitch matrixToSideLEDs(int x, int y)
+        public static Pitch matrixToSideLEDs(int x, int y, LaunchpadModels model)
         {
-            return sideLEDnotes[y];
+            switch (model)
+            {
+                case LaunchpadModels.LaunchpadS:
+                    return sideLEDnotesS[y];
+                    break;
+                case LaunchpadModels.LaunchpadPro:
+                    return sideLEDnotes[y];
+                    break;
+                case LaunchpadModels.LaunchpadMini:
+                    return sideLEDnotesS[y];
+                    break;
+                case LaunchpadModels.LaunchpadMk2:
+                    return sideLEDnotes[y];
+                    break;
+                default:
+                    return Pitch.A0;
+                    break;
+            }
         }
 
         public static int colorToVelo(Color color, LaunchpadModels model)

@@ -490,7 +490,7 @@ namespace Launchpad_LED_Editor
             circleButton p = sender as circleButton;
             string[] split = p.Name.Split('_');
             int led_y = int.Parse(split[1]);
-            Pitch led_pitch = DeviceManager.matrixToSideLEDs(0, led_y);
+            Pitch led_pitch = DeviceManager.matrixToSideLEDs(0, led_y, currentLaunchpadModel);
             if (e.Button == MouseButtons.Left)
             {
                 if (DeviceManager.targetOutput != null && DeviceManager.targetOutput.IsOpen)
@@ -518,7 +518,7 @@ namespace Launchpad_LED_Editor
             circleButton p = sender as circleButton;
             string[] split = p.Name.Split('_');
             int led_y = int.Parse(split[1]);
-            Pitch led_pitch = DeviceManager.matrixToSideLEDs(0, led_y);
+            Pitch led_pitch = DeviceManager.matrixToSideLEDs(0, led_y, currentLaunchpadModel);
             if (e.Button == MouseButtons.Left)
             {
                 if (DeviceManager.targetOutput != null && DeviceManager.targetOutput.IsOpen)
@@ -545,7 +545,7 @@ namespace Launchpad_LED_Editor
             string[] split = p.Name.Split('_');
             int led_x = int.Parse(split[1]);
             int led_y = int.Parse(split[2]);
-            Pitch led_pitch = DeviceManager.matrixToNote(led_y, led_x);
+            Pitch led_pitch = DeviceManager.matrixToNote(led_y, led_x, currentLaunchpadModel);
 
             if (e.Button == MouseButtons.Left)
             {
@@ -575,7 +575,7 @@ namespace Launchpad_LED_Editor
             string[] split = p.Name.Split('_');
             int led_x = int.Parse(split[1]);
             int led_y = int.Parse(split[2]);
-            Pitch led_pitch = DeviceManager.matrixToNote(led_y, led_x);
+            Pitch led_pitch = DeviceManager.matrixToNote(led_y, led_x, currentLaunchpadModel);
 
             if (e.Button == MouseButtons.Left)
             {
